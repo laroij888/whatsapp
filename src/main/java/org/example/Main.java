@@ -7,6 +7,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Login auth = new Login();
 
+        // Account registration setup
+        auth.registerUser("kyl_1", "Ch&&sec@ke99!", "Keegan", "Govender");
+
         // 1. User must login successfully first
         System.out.println("=== QuickChat User Login ===");
         boolean loggedIn = false;
@@ -67,7 +70,6 @@ public class Main {
         for (int i = 0; i < count; i++) {
             System.out.println("\n--- Entering Message " + (i + 1) + " of " + count + " ---");
 
-            // Recipient validation loop
             String recipient = "";
             while (true) {
                 System.out.print("Enter recipient cell number (with international code, e.g. +27...): ");
@@ -80,7 +82,6 @@ public class Main {
                 }
             }
 
-            // Message text validation loop
             String text = "";
             while (true) {
                 System.out.print("Enter message (max 250 characters): ");
@@ -95,13 +96,11 @@ public class Main {
                 }
             }
 
-            // Generate ID and create full Message object
             String messageID = Message.generateMessageID();
             System.out.println("Message ID generated: " + messageID);
 
             Message msg = new Message(messageID, i, recipient, text);
 
-            // Choose to Send, Disregard, or Store
             System.out.println("\nSelect an action:");
             System.out.println("1) Send Message");
             System.out.println("2) Disregard Message");

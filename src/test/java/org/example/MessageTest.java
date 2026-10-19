@@ -13,14 +13,12 @@ public class MessageTest {
 
     @Test
     public void testRecipientNumberSuccess() {
-        // Test Case 1: valid international recipient
         Message msg = new Message("0012345678", 0, "+27718693002", "Hi Mike, can you join us for dinner tonight?");
         assertEquals("Cell phone number successfully captured.", msg.checkRecipientCell());
     }
 
     @Test
     public void testRecipientNumberFailure() {
-        // Test Case 2: missing international code
         Message msg = new Message("0012345678", 1, "08575975889", "Hi Keegan, did you receive the payment?");
         assertEquals("Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.",
                 msg.checkRecipientCell());
@@ -28,7 +26,6 @@ public class MessageTest {
 
     @Test
     public void testMessageHashGeneration() {
-        // Message ID starts with "00", message index 0, first word "Hi", last word "tonight"
         Message msg = new Message("0012345678", 0, "+27718693002", "Hi Mike, can you join us for dinner tonight?");
         assertEquals("00:0:HITONIGHT", msg.createMessageHash());
     }
@@ -42,7 +39,6 @@ public class MessageTest {
 
     @Test
     public void testMessageLengthFailure() {
-        // 260 characters (exceeds 250 by 10)
         String longText = "A".repeat(260);
         Message msg = new Message("0012345678", 0, "+27718693002", longText);
         assertEquals("Message exceeds 250 characters by 10; please reduce the size.", msg.validateMessageLength());

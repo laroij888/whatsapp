@@ -23,7 +23,6 @@ public class Message {
         this.messageHash = createMessageHash();
     }
 
-    // Auto-generates a 10-digit numeric Message ID
     public static String generateMessageID() {
         SecureRandom random = new SecureRandom();
         StringBuilder sb = new StringBuilder();
@@ -33,12 +32,10 @@ public class Message {
         return sb.toString();
     }
 
-    // Ensures Message ID is not more than 10 characters
     public boolean checkMessageID() {
         return this.messageID != null && this.messageID.length() <= 10;
     }
 
-    // Validates recipient number: must start with '+' (international code) and standard formatting
     public String checkRecipientCell() {
         if (this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <= 13) {
             return "Cell phone number successfully captured.";
@@ -46,15 +43,12 @@ public class Message {
         return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
     }
 
-    // Creates the message hash: first 2 digits of ID : message number : FIRSTLAST words in caps
     public String createMessageHash() {
         if (this.messageID == null || this.messageID.length() < 2 || this.messageText == null || this.messageText.trim().isEmpty()) {
             return "";
         }
 
         String idPrefix = this.messageID.substring(0, 2);
-
-        // Clean words and remove trailing punctuation like '?' or '.'
         String[] words = this.messageText.trim().split("\\s+");
         String firstWord = words[0].replaceAll("[^a-zA-Z0-9]", "");
         String lastWord = words[words.length - 1].replaceAll("[^a-zA-Z0-9]", "");
@@ -62,7 +56,6 @@ public class Message {
         return (idPrefix + ":" + this.messageNumber + ":" + firstWord + lastWord).toUpperCase();
     }
 
-    // Validates that message length does not exceed 250 characters
     public String validateMessageLength() {
         if (this.messageText == null) {
             return "Message ready to send.";
@@ -76,7 +69,6 @@ public class Message {
         }
     }
 
-    // Handles the sending options
     public String SentMessage(int choice) {
         switch (choice) {
             case 1:
@@ -92,7 +84,6 @@ public class Message {
         }
     }
 
-    // Stores message details into a JSON file
     public void storeMessage() {
         String jsonRecord = "{\n" +
                 "  \"messageID\": \"" + escapeJson(this.messageID) + "\",\n" +
@@ -113,12 +104,11 @@ public class Message {
         return data.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
-    // Returns formatted details of the message
     public String printMessages() {
         return "Message ID: " + this.messageID + "\n" +
-                "Message Hash: " + this.messageHash + "\n" +
-                "Recipient: " + this.recipient + "\n" +
-                "Message: " + this.messageText;
+               "Message Hash: " + this.messageHash + "\n" +
+               "Recipient: " + this.recipient + "\n" +
+               "Message: " + this.messageText;
     }
 
     public static int returnTotalMessagess() {
@@ -129,7 +119,6 @@ public class Message {
         totalSentMessages = 0;
     }
 
-    // Getters and setters
     public String getMessageID() { return messageID; }
     public void setMessageID(String messageID) { this.messageID = messageID; }
     public int getMessageNumber() { return messageNumber; }
